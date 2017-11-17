@@ -1,0 +1,135 @@
+import java.util.Random; 
+	import java.util.Scanner;
+	public class Lab3Pig {
+	private int dicenum=0; 
+	private int P1sum=0;
+	private int P2sum=0;
+	
+	
+	public int dice()
+	{
+		Random randy = new Random();
+		
+		int dicenum = randy.nextInt(6) + 1; //maximum is 6 and minimum is 1
+		return dicenum;
+	}
+
+
+	public void Player1()
+	{   int a=0;
+		System.out.println("");
+		System.out.println("Turn Player1");
+		do{
+			int P1s = dice();
+			System.out.println("Player1 dice :" + P1s);
+		
+			if(P1s == 1)
+			{ 
+				this.Player2();
+          	}
+			else
+			{
+				P1sum+=P1s;
+				System.out.println("Player1 Sum : "+ P1sum);
+				System.out.println("");
+			
+				this.Victory(P1sum,1);
+			}
+		
+			System.out.println("Want to continue? Y or N");
+			Scanner input = new Scanner(System.in);
+			char chance = input.next().charAt(0);
+			if(chance == 'y')
+				a = 1;
+
+		}while (a == 1);
+	 
+		this.Player2();
+	}
+
+	public void Player2()
+	{
+		int b = 0;
+		System.out.println("");
+		System.out.println("Turn Player2");
+		do {
+		int P2s = dice();
+		System.out.println("Player2 dice :" + P2s);
+		
+		if(P2s==1)
+		{ 
+			this.Player1();
+		}
+		else
+		{
+			P2sum+=P2s;
+			System.out.println("Player2 Sum : "+P2sum);
+			System.out.println("");
+
+			this.Victory(P2sum, 2);
+		}
+		System.out.print("Want to continue? Y or N");
+		Scanner keyboard = new Scanner(System.in);
+		char chance2 = keyboard.next().charAt(0);
+		
+		if(chance2 == 'y')
+			b=1;
+		}while(b==1);
+		
+		this.Player1();
+	}
+
+	public void Victory(int sum, int flag)
+	{
+		int victory = sum;
+		if(victory >= 100)
+			if(flag == 1)
+			{
+				System.out.println("Victory Player 1");
+				System.exit(0);
+			}
+			else
+			{
+				System.out.println("Victory Player 2");
+				System.exit(0);
+			}
+	}
+
+	public void Turn()
+	{
+		System.out.println("Game Start");
+		int p1= this.dice();
+		int p2= this.dice();
+		
+		System.out.println("Player1 dice :"+p1);
+		System.out.println("Player2 dice :"+p2);
+		if(p1>p2)
+		{
+			System.out.println("First ");
+			this.Player1();
+		}
+		else if(p1==p2)
+		{
+			p1= this.dice();
+			p2= this.dice();
+			
+			System.out.println("Player1 dice :"+p1);
+			System.out.println("Player2 dice :"+p2);
+		}
+		else{
+			System.out.println("First ");
+			this.Player2();
+		}
+	}
+	
+	
+	public static void main(String[] args) 
+	{
+		System.out.println(" Welcome to the Game ");
+		System.out.println("First choose if you want to be player 1 or 2, then the dices will be rolled, you have 2 choices stop when you think it is necessary or get 0 points when a 1 is rolled out)");
+		System.out.println("The player who reaches 100 wins first");
+		System.out.println("Good Luck");
+		Lab3Pig Lab = new Lab3Pig();
+		Lab.Turn();
+	}
+}
